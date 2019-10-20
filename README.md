@@ -5,7 +5,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/RLT)](https://CRAN.R-project.org/package=RLT)
 <!-- badges: end -->
 
-This is the original C verstion of the `RLT` (Reinforcement Learning Trees) package.
+This is the original `C` verstion of the `RLT` (Reinforcement Learning Trees) package.
 
 ## Installation
 
