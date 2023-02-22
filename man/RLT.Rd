@@ -2,23 +2,45 @@
 % Please edit documentation in R/RLT.r
 \name{RLT}
 \alias{RLT}
-\title{Main function of reinforcement learning trees}
+\title{Reinforcement Learning Trees}
 \usage{
-RLT(x, y, censor = NULL, model = "regression", print.summary = 0,
-  use.cores = 1, ntrees = if (reinforcement) 100 else 500,
-  mtry = max(1, as.integer(ncol(x)/3)), nmin = max(1,
-  as.integer(log(nrow(x)))), alpha = 0.4, split.gen = "random",
-  nsplit = 1, resample.prob = 0.9, replacement = TRUE,
-  npermute = 1, select.method = "var", subject.weight = NULL,
-  variable.weight = NULL, track.obs = FALSE, importance = TRUE,
-  reinforcement = FALSE, muting = -1, muting.percent = if
-  (reinforcement) MuteRate(nrow(x), ncol(x), speed = "aggressive", info =
-  FALSE) else 0, protect = as.integer(log(ncol(x))), combsplit = 1,
-  combsplit.th = 0.25, random.select = 0, embed.n.th = 4 * nmin,
+RLT(
+  x,
+  y,
+  censor = NULL,
+  model = "regression",
+  print.summary = 0,
+  use.cores = 1,
+  ntrees = if (reinforcement) 100 else 500,
+  mtry = max(1, as.integer(ncol(x)/3)),
+  nmin = max(1, as.integer(log(nrow(x)))),
+  alpha = 0.4,
+  split.gen = "random",
+  nsplit = 1,
+  resample.prob = 0.9,
+  replacement = TRUE,
+  npermute = 1,
+  select.method = "var",
+  subject.weight = NULL,
+  variable.weight = NULL,
+  track.obs = FALSE,
+  importance = TRUE,
+  reinforcement = FALSE,
+  muting = -1,
+  muting.percent = if (reinforcement) MuteRate(nrow(x), ncol(x), speed = "aggressive",
+    info = FALSE) else 0,
+  protect = as.integer(log(ncol(x))),
+  combsplit = 1,
+  combsplit.th = 0.25,
+  random.select = 0,
+  embed.n.th = 4 * nmin,
   embed.ntrees = max(1, -atan(0.01 * (ncol(x) - 500))/pi * 100 + 50),
-  embed.resample.prob = 0.8, embed.mtry = 1/2,
-  embed.nmin = as.integer(nrow(x)^(1/3)), embed.split.gen = "random",
-  embed.nsplit = 1)
+  embed.resample.prob = 0.8,
+  embed.mtry = 1/2,
+  embed.nmin = as.integer(nrow(x)^(1/3)),
+  embed.split.gen = "random",
+  embed.nsplit = 1
+)
 }
 \arguments{
 \item{x}{A matrix or data.frame for features}
@@ -37,7 +59,7 @@ RLT(x, y, censor = NULL, model = "regression", print.summary = 0,
 
 \item{mtry}{Number of variables used at each internal node, only for \code{reinforcement = FALSE}}
 
-\item{nmin}{Minimum number of observations reqired in an internal node to perform a split. Set this to twice of the desired terminal node size.}
+\item{nmin}{Minimum number of observations required in an internal node to perform a split. Set this to twice of the desired terminal node size.}
 
 \item{alpha}{Minimum number of observations required for each child node as a portion of the parent node. Must be within \code{(0, 0.5]}.}
 
@@ -67,13 +89,13 @@ RLT(x, y, censor = NULL, model = "regression", print.summary = 0,
 
 \item{muting.percent}{Only for \code{muting = -1} the proportion of muting}
 
-\item{protect}{Number of protected variables that will not be muted. These variables are adaptived selected for each tree.}
+\item{protect}{Number of protected variables that will not be muted. These variables are adaptively selected for each tree.}
 
 \item{combsplit}{Number of variables used in a combination split. \code{combsplit = 1} gives regular binary split; \code{combsplit > 1} produces linear combination splits.}
 
-\item{combsplit.th}{The mininum threshold (as a relative measurement compared to the best variable) for a variable to be used in the combination split.}
+\item{combsplit.th}{The minimum threshold (as a relative measurement compared to the best variable) for a variable to be used in the combination split.}
 
-\item{random.select}{Randomly select a varaible from the top variable in the linear combination as the splitting rule.}
+\item{random.select}{Randomly select a variable from the top variable in the linear combination as the splitting rule.}
 
 \item{embed.n.th}{Number of observations to stop the embedded model and choose randomly from the current protected variables.}
 
@@ -123,7 +145,7 @@ RLT.pred = predict(RLT.fit, testx)
 mean((RLT.pred$Prediction - testy)^2)
 
 # Reinforcement Learning Trees, using an embedded model to find the splitting rule
-\dontrun{
+\donttest{
 Mark0 = proc.time()
 RLT.fit = RLT(trainx, trainy, model = "regression", use.cores = 6, ntrees = 100,
               importance = TRUE, reinforcement = TRUE, combsplit = 3, embed.ntrees = 25)
